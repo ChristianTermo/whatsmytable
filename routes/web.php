@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,6 @@ Route::post('log-in', [LoginController::class, 'login'])->name('log-in');
 
 Route::get('validate', [LoginController::class, 'getValidation'])->name('validate');
 Route::post('validateToken', [LoginController::class, 'validateToken'])->name('validateToken');
+
+Route::get('getPanel', [AdminController::class, 'getPanel'])->name('getPanel');
+Route::post('importFile', [AdminController::class, 'importFile'])->name('importFile');
