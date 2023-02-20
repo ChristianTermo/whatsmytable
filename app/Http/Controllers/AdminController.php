@@ -20,6 +20,7 @@ class AdminController extends Controller
         $path = public_path('storage/csv/' . $filename);
 
         $users = (new FastExcel)->import($path, function ($line) {
+
             return User::firstOrCreate(
                 [
                     'email' => $line['email'],

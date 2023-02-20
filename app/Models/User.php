@@ -24,7 +24,8 @@ class User extends Authenticatable
         'dci',
         'email',
         'country',
-        'status'
+        'status',
+        'torneo'
     ];
 
     /**

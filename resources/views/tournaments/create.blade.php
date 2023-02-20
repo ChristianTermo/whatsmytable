@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/specMenu.css') }}" />
-    <title>Admin Panel</title>
+    <title>Tornei</title>
 </head>
 
 <body>
+    @extends('layouts.layout-bootstrap')
     <!-- Nav superiore -->
     <section class="altbar">
         <!-- pulsante indietro -->
@@ -61,33 +61,36 @@
             </button>
         </div>
     </section>
-    <!-- button container-->
-    <section id="main">
-        <div class="dimension">
-            <div id="checkin" class="containerbuttons">
-                <form action="{{ route('tournaments.index') }}" method="get">
-                    <button type="submit">Gestione Tornei</button>
-                </form>
-            </div>
+    <form method="POST" action="{{route('tournaments.store')}}">
+
+        @csrf
+        @method('POST')
+
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        <div class="form-group">
+            <label for="name">Nome Torneo</label>
+            <input type="text" class="form-control" name="name" placeholder="name">
         </div>
 
-        <div class="dimension">
-            <div id="checkin" class="containerbuttons">
-                <form action="" method="get">
-                    <button type="submit">Gestione Utenti</button>
-                </form>
+        <div class="form-group">
+            <label for="start_date">Data Inizio Torneo</label>
+            <div style="display: flex">
+                <input id="start_date" type="date" class="form-control" name="start_date">
+                &nbsp;&nbsp;
             </div>
-        </div>
 
-        <!--   <div class="dimension">
-            <div id="checkin" class="containerbuttons">
-                <form action="" method="get">
-                    <button type="submit">Gestione Transazioni</button>
-                </form>
-            </div>
-        </div>-->
-    </section>
+            <button type="submit" class="btn btn-success">SUBMIT</button>
 
+    </form>
 
 </body>
 

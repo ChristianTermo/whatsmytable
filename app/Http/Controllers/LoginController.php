@@ -55,14 +55,18 @@ class LoginController extends Controller
         $request->validate([
             'token' => 'required',
         ]);
-        $token=AuthToken::where('token', '=', $request['token'])->where('expires_at', '>', Carbon::now());
+        $token = AuthToken::where('token', '=', $request['token'])->where('expires_at', '>', Carbon::now());
 
         if ($token->exists()) {
             $token->delete();
-            return response()->json('token validated');     
+            return response()->json('token validated');
         } else {
             return redirect('login');
         };
-        
+    }
+    
+    public function logout()
+    {
+        return redirect('login');
     }
 }

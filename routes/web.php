@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TournamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,12 @@ Route::get('/', function () {
 
 Route::get('login', [LoginController::class, 'getLogin'])->name('login');
 Route::post('log-in', [LoginController::class, 'login'])->name('log-in'); 
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('validate', [LoginController::class, 'getValidation'])->name('validate');
 Route::post('validateToken', [LoginController::class, 'validateToken'])->name('validateToken');
 
 Route::get('getPanel', [AdminController::class, 'getPanel'])->name('getPanel');
 Route::post('importFile', [AdminController::class, 'importFile'])->name('importFile');
+
+Route::resource('tournaments', TournamentController::class);

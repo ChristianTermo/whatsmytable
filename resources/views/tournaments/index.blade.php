@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/specMenu.css') }}" />
-    <title>Admin Panel</title>
+    <title>Tornei</title>
 </head>
 
 <body>
+    @extends('layouts.layout-bootstrap')
     <!-- Nav superiore -->
     <section class="altbar">
         <!-- pulsante indietro -->
@@ -61,34 +61,40 @@
             </button>
         </div>
     </section>
-    <!-- button container-->
-    <section id="main">
-        <div class="dimension">
-            <div id="checkin" class="containerbuttons">
-                <form action="{{ route('tournaments.index') }}" method="get">
-                    <button type="submit">Gestione Tornei</button>
-                </form>
-            </div>
-        </div>
+    <a class="btn btn-success" href="{{ route('tournaments.create') }}">CREA UN NUOVO TORNEO</a>
+    <table class="table table-striped">
 
-        <div class="dimension">
-            <div id="checkin" class="containerbuttons">
-                <form action="" method="get">
-                    <button type="submit">Gestione Utenti</button>
-                </form>
-            </div>
-        </div>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Inizio Torneo</th>
+                <th>*</th>
+            </tr>
+        </thead>
 
-        <!--   <div class="dimension">
-            <div id="checkin" class="containerbuttons">
-                <form action="" method="get">
-                    <button type="submit">Gestione Transazioni</button>
-                </form>
-            </div>
-        </div>-->
-    </section>
+        <tbody>
+            @foreach ($tournaments as $tournament)
 
+            <tr>
+                <td>{{$tournament->id}}</td>
+                <td>{{$tournament->name}}</td>
+                <td>{{$tournament->start_date}}</td>
+                <!-- bottoni collegati alle funzioni del Controller -->
 
+                <td>
+                    <form method='POST' action="{{ route('tournaments.destroy', ['tournament' => $tournament->id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <input class="btn btn-danger" type="submit" value="DELETE">
+                    </form>
+                </td>
+            </tr>
+
+            @endforeach
+        </tbody>
+
+    </table>
 </body>
 
 </html>
