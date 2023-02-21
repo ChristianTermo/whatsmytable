@@ -8,6 +8,11 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
+    public function getRegistration()
+    {
+        return view('registration.registration');
+    }
+
     public function getPanel()
     {
         return view('panel');

@@ -12,5 +12,6 @@ class AuthToken extends Model
     protected $fillable = [
         'token',
         'expires_at',
+        'email_associated'
     ];
 }

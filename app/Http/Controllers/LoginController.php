@@ -28,9 +28,7 @@ class LoginController extends Controller
         if (User::where('email', '=', $request['email'])->count() > 0) {
             echo 'user logged in';
         } else {
-            User::Create([
-                'email' => $request['email'],
-            ]);
+            return redirect('login');
         };
 
         $token = Str::random(12);
@@ -38,6 +36,7 @@ class LoginController extends Controller
         DB::table('auth_tokens')->insert([
             'token' => $token,
             'expires_at' => Carbon::now()->addMinutes(10),
+            'email_associated' => $request->input('email'),
         ]);
 
         Mail::to($request->email)->send(new LoginMail($token));
@@ -56,15 +55,21 @@ class LoginController extends Controller
             'token' => 'required',
         ]);
         $token = AuthToken::where('token', '=', $request['token'])->where('expires_at', '>', Carbon::now());
+        $email_associated = AuthToken::where('token', '=', $request['token'])->value('email_associated');
+
+        $role = User::where('email', '=', $email_associated)->value('role');
 
         if ($token->exists()) {
-            $token->delete();
-            return response()->json('token validated');
-        } else {
-            return redirect('login');
-        };
+            if ($role == 'admin') {
+                $token->delete();
+                return redirect('getPanel');             
+            } elseif ($role == 'player') {
+                $token->delete();
+                return 'player';            
+            }
+        }
     }
-    
+
     public function logout()
     {
         return redirect('login');

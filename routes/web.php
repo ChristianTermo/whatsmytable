@@ -30,4 +30,6 @@ Route::post('validateToken', [LoginController::class, 'validateToken'])->name('v
 Route::get('getPanel', [AdminController::class, 'getPanel'])->name('getPanel');
 Route::post('importFile', [AdminController::class, 'importFile'])->name('importFile');
 
+Route::get('Registration', [AdminController::class, 'getRegistration'])->name('Registration');
+
 Route::resource('tournaments', TournamentController::class);
