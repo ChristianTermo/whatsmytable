@@ -51,7 +51,7 @@ class TournamentController extends Controller
             'start_date' => $request->input('start_date')
         ]);
 
-        return redirect('tournaments.index');
+        return view('tournaments.index');
     }
 
     /**
@@ -97,6 +97,6 @@ class TournamentController extends Controller
     public function destroy(Tournament $tournament)
     {
         $tournament->delete();
-        return redirect('tournaments.index');
+        return view('tournaments.index');
     }
 }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\PlayerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,12 @@ Route::get('getPanel', [AdminController::class, 'getPanel'])->name('getPanel');
 Route::post('importFile', [AdminController::class, 'importFile'])->name('importFile');
 
 Route::get('Registration', [AdminController::class, 'getRegistration'])->name('Registration');
+
+Route::get('index/{id}', [PlayerController::class, 'index'])->name('index');
+Route::post('RedirectToPersonal', [PlayerController::class, 'RedirectToPersonal'])->name('RedirectToPersonal');
+
+Route::view('personal', 'user.personal')->name('personal');
+Route::view('standings', 'user.standings')->name('standings');
+Route::view('pairings', 'user.pairings')->name('pairings');
 
 Route::resource('tournaments', TournamentController::class);

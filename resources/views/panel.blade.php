@@ -65,16 +65,16 @@
     <section id="main">
         <div class="dimension">
             <div id="checkin" class="containerbuttons">
-                <form action="{{ route('tournaments.index') }}" method="get">
-                    <button type="submit">Gestione Tornei</button>
+                <form action="{{ route('Registration') }}" method="get">
+                    <button type="submit">Gestione Utenti</button>
                 </form>
             </div>
         </div>
 
         <div class="dimension">
             <div id="checkin" class="containerbuttons">
-                <form action="" method="get">
-                    <button type="submit">Gestione Utenti</button>
+                <form action="{{ route('tournaments.index') }}" method="get">
+                    <button type="submit">Gestione Tornei</button>
                 </form>
             </div>
         </div>

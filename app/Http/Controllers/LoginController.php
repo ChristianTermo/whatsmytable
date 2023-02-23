@@ -31,7 +31,7 @@ class LoginController extends Controller
             return redirect('login');
         };
 
-        $token = Str::random(12);
+        $token = Str::random(6);
 
         DB::table('auth_tokens')->insert([
             'token' => $token,
@@ -49,7 +49,7 @@ class LoginController extends Controller
         return view('ValidationToken');
     }
 
-    public function validateToken(Request $request)
+    public function validateToken(Request $request, User $user)
     {
         $request->validate([
             'token' => 'required',
@@ -57,6 +57,7 @@ class LoginController extends Controller
         $token = AuthToken::where('token', '=', $request['token'])->where('expires_at', '>', Carbon::now());
         $email_associated = AuthToken::where('token', '=', $request['token'])->value('email_associated');
 
+        $id = User::where('email', '=', $email_associated)->value('id');
         $role = User::where('email', '=', $email_associated)->value('role');
 
         if ($token->exists()) {
@@ -65,8 +66,10 @@ class LoginController extends Controller
                 return redirect('getPanel');             
             } elseif ($role == 'player') {
                 $token->delete();
-                return 'player';            
+                return redirect()->route('index', [$id]);            
             }
+        } else {
+            return redirect('validate');
         }
     }
 
