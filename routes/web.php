@@ -28,12 +28,11 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('validate', [LoginController::class, 'getValidation'])->name('validate');
 Route::post('validateToken', [LoginController::class, 'validateToken'])->name('validateToken');
 
-Route::get('getPanel', [AdminController::class, 'getPanel'])->name('getPanel');
+Route::get('getPanel/{token}', [AdminController::class, 'getPanel'])->name('getPanel');
 Route::post('importFile', [AdminController::class, 'importFile'])->name('importFile');
-
 Route::get('Registration', [AdminController::class, 'getRegistration'])->name('Registration');
 
-Route::get('index/{id}', [PlayerController::class, 'index'])->name('index');
+Route::get('index/{id}/{token}', [PlayerController::class, 'index'])->name('index');
 Route::post('RedirectToPersonal', [PlayerController::class, 'RedirectToPersonal'])->name('RedirectToPersonal');
 
 Route::view('personal', 'user.personal')->name('personal');

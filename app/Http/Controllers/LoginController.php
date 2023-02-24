@@ -35,7 +35,7 @@ class LoginController extends Controller
 
         DB::table('auth_tokens')->insert([
             'token' => $token,
-            'expires_at' => Carbon::now()->addMinutes(10),
+            'expires_at' => Carbon::now()->addHours(2),
             'email_associated' => $request->input('email'),
         ]);
 
@@ -55,6 +55,7 @@ class LoginController extends Controller
             'token' => 'required',
         ]);
         $token = AuthToken::where('token', '=', $request['token'])->where('expires_at', '>', Carbon::now());
+        $tokenString = AuthToken::where('token', '=', $request['token'])->where('expires_at', '>', Carbon::now())->value('token');
         $email_associated = AuthToken::where('token', '=', $request['token'])->value('email_associated');
 
         $id = User::where('email', '=', $email_associated)->value('id');
@@ -63,13 +64,13 @@ class LoginController extends Controller
         if ($token->exists()) {
             if ($role == 'admin') {
                 $token->delete();
-                return redirect('getPanel');             
+                return redirect('getPanel', [$tokenString]);             
             } elseif ($role == 'player') {
                 $token->delete();
-                return redirect()->route('index', [$id]);            
+                return redirect()->route('index',[$id, $tokenString]);            
             }
         } else {
-            return redirect('validate');
+            return redirect('validate')->withErrors('token inesistente o scaduto');
         }
     }
 

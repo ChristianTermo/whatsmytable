@@ -10,14 +10,17 @@
 
 <body>
     <h1>Online Pairings</h1>
-    @foreach($tournaments as $tournament)
+
     <form action="{{ route('RedirectToPersonal')}}" method="post">
         @csrf
-        <div style="text-align: center">
-            <button type="submit" value="{{$tournament->nome_torneo}}" name="torneo">{{$tournament->nome_torneo}}</button>
-        </div>
+        <select name="torneo" id="">
+            @foreach($tournaments as $tournament)
+            <option value="{{$tournament->nome_torneo}}">{{$tournament->nome_torneo}}</option>
+            @endforeach
+        </select>
+        <button type="submit">Submit</button>
     </form>
-    @endforeach
+
 </body>
 
 </html>

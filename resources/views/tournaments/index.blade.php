@@ -61,6 +61,7 @@
             </button>
         </div>
     </section>
+    
     <a class="btn btn-success" href="{{ route('tournaments.create') }}">CREA UN NUOVO TORNEO</a>
     <table class="table table-striped">
 
@@ -74,7 +75,7 @@
         </thead>
 
         <tbody>
-            @foreach ($tournaments as $tournament)
+            @foreach($tournaments as $tournament)
 
             <tr>
                 <td>{{$tournament->id}}</td>

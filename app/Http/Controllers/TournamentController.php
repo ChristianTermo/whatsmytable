@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tournament;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TournamentController extends Controller
 {
@@ -51,7 +52,7 @@ class TournamentController extends Controller
             'start_date' => $request->input('start_date')
         ]);
 
-        return view('tournaments.index');
+        return redirect()->route('tournaments.index');
     }
 
     /**
@@ -97,6 +98,7 @@ class TournamentController extends Controller
     public function destroy(Tournament $tournament)
     {
         $tournament->delete();
-        return view('tournaments.index');
+        DB::table('users_tournaments')->where('nome_torneo', '=',$tournament->name)->delete();
+        return redirect()->route('tournaments.index');
     }
 }
